@@ -32,7 +32,7 @@ public class LoginHomePage
 
     public void ThenVerifyTheTitleOfThePageIs(string expectedTitle)
     {
-       string actualTitle=> _driver.Title;
-       Assert.Equal(expectedTitle, actualTitle);
+       string actualTitle = _homePage.Title;
+       Assert.Equal(expectedTitle, actualTitle,"Titles are not matching");
     }
 }
