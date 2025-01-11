@@ -5,13 +5,14 @@ using Selenium.Pages;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 
-namespace Selenium.Steps;
+namespace Selenium;
 
-public class LoginHomePage
+[Binding]
+public class HomePageLogin
 {
-    private IWebDriver _driver;
     private HomePage _homePage;
-
+    private IWebDriver _driver;
+    
     [Given(@"the browser is open")]
     public void GivenTheBrowserIsOpen()
     {
@@ -29,10 +30,14 @@ public class LoginHomePage
     }
 
     [Then(@"Verify the title of the page is ""(.*)""")]
-
     public void ThenVerifyTheTitleOfThePageIs(string expectedTitle)
     {
-       Assert.That(_homePage.getTitle(), Is.EqualTo(expectedTitle),"Page title does not match");
-        
+        Assert.That(_homePage.getTitle(), Is.EqualTo(expectedTitle),"Page title does not match");
+    }
+    
+    [AfterScenario]
+    public void tearDown()
+    {
+        _driver.Quit();
     }
 }

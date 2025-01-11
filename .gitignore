@@ -1,0 +1,7 @@
+.idea/*
+.idea
+*/Selenium/Selenium/obj/
+*/Selenium/Selenium/bin/
+.DS_Store
+Selenium/Selenium.sln.DotSettings.user
+

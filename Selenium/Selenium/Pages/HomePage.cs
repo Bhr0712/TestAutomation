@@ -30,6 +30,11 @@ public class HomePage
     public void ClickFileUpload(){
         FileUpload.Click();
     }
+
+    public string getTitle()
+    {
+        return _driver.Title;
+    }
     
     
 }
