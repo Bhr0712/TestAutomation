@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Reqnroll;
@@ -36,7 +37,7 @@ public class HomePageLogin
     }
     
     [AfterScenario]
-    public void tearDown()
+    public void TearDown()
     {
         _driver.Quit();
     }
