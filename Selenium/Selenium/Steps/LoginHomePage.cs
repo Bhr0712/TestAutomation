@@ -8,7 +8,7 @@ using WebDriverManager.DriverConfigs.Impl;
 
 namespace Selenium.Steps;
 
-public class LoginHomePage
+public class LoginHomePage: CommonSteps
 {
     private IWebDriver _driver;
     private HomePage _homePage;
