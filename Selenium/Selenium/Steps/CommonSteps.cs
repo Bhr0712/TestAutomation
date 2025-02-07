@@ -4,5 +4,5 @@ namespace Selenium.Steps;
 
 public class CommonSteps
 {
-    protected static IWebDriver _driver;
+    protected static WebDriver _driver;
 }
