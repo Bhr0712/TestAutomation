@@ -1,5 +1,4 @@
-using OpenQA.Selenium.BiDi.Modules.Script;
-using OpenQA.Selenium;
+using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
 using Reqnroll;
 using Selenium.Pages;
