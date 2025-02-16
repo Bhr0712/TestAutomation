@@ -1,5 +1,7 @@
 using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using Reqnroll;
 using Selenium.Pages;
 using WebDriverManager;
@@ -11,30 +13,51 @@ namespace Selenium.Steps;
 public class LambdaTestSteps:CommonSteps
 {
     private LambdaTest _lambdaTest;
+    private WebDriverWait _wait;
     
-    [When(@"Lambda test dropdown Url is open")]
+    [Given(@"Lambda test dropdown Url is open")]
     public void WhenLambdaTestDropdownUrlIsOpen()
     {
         new DriverManager().SetUpDriver(new ChromeConfig());
         _driver=new ChromeDriver();
         _driver.Manage().Window.Maximize();
-        _lambdaTest=new LambdaTest(_driver);
-        _lambdaTest.OpenThePage();
-        
-        
+        _driver.Navigate().GoToUrl("https://www.lambdatest.com/selenium-playground/select-dropdown-demo");
+        _lambdaTest = new LambdaTest(_driver);
+        _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
     }
 
     [When(@"Choose the selection from list")]
     public void WhenChooseTheSelectionFromList()
     {
-        _lambdaTest.SelectionOfOption();
-        _lambdaTest.SelectMultipleOption();
+        _lambdaTest.SelectOption("Wednesday");
+        _lambdaTest.SelectMultipleOptions(new List<string>() {"California", "Florida"});
     }
 
-    [Then(@"The select option is ""(.*)"" and Multiple selections are ""(.*)"" and ""(.*)""")]
-    public void ThenTheSelectOptionIsAndMultipleSelectionsAreAnd(string expectedDay, string expectedOption1, string expectedOption2)
+    [When(@"Choose (.*) from dropdown list")]
+    public void WhenChooseFromDropdownList(string day)
     {
-        Assert.That(_lambdaTest.ActualSelectedOption(), Is.EqualTo(expectedDay));
-        Assert.That(_lambdaTest.ActualMultipleOption(), Is.EqualTo(expectedOption1+"-"+expectedOption2));
+        _wait.Until(driver => { return driver.FindElement(By.Id("select-demo")); });
+        _lambdaTest.SelectOption(day);
+    }
+
+    [When(@"Choose (.*) from multiselect list")]
+    public void WhenChooseFromMultiselectList(string options)
+    {
+        var optionList = options.Split(',').Select(option => option.Trim()).ToList();
+        _lambdaTest.SelectMultipleOptions(optionList);
+    }
+
+    [Then(@"Verify the selected option in dropdown list is (.*)")]
+    public void ThenVerifyTheSelectedOptionInDropdownListIs(string option)
+    {
+        Assert.IsTrue(_lambdaTest.verifyDropdownSelectedOption(option));
+    }
+
+    [Then(@"Verify the selected option/s in multiselect list is/are (.*)")]
+    public void ThenVerifyTheSelectedOptionInMultiselectListIs(string options)
+    {
+        var optionList = options.Split(',').Select(option => option.Trim()).ToList();
+        Assert.IsTrue(_lambdaTest.verifyMultipleSelectedOptions(optionList));
+        Thread.Sleep(5000);
     }
 }
