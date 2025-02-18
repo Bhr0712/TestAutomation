@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace Selenium.Pages;
 
@@ -10,47 +11,50 @@ public class LambdaTest
     public LambdaTest(WebDriver driver)
     {
         _driver = driver;
+        dropdown = new SelectElement(SelectOptionSingle);
+        multiSelect = new SelectElement(SelectOptionMultiple);
     }
 
     public void OpenThePage()
     {
         _driver.Navigate().GoToUrl(url);
     }
-    
-    IWebElement SelectOption=> _driver.FindElement(By.Id("select-demo"));
-    IWebElement SelectedOption => _driver.FindElement(By.XPath("//select[@id='select-demo']//option[@value='Wednesday']"));
-    IWebElement MultipleOption1 => _driver.FindElement(By.XPath("//select[@id='multi-select']//option[@value='California']"));
-    IWebElement FirstSelectedButton => _driver.FindElement(By.Id("printMe"));
-    IWebElement MultipleOption2=>_driver.FindElement(By.XPath("//select[@id='multi-select']//option[@value='Ohio']"));
-    IWebElement LastSelectedButton => _driver.FindElement(By.Id("printAll"));
-    
 
-    public void SelectionOfOption()
+    IWebElement SelectOptionSingle => _driver.FindElement(By.Id("select-demo"));
+    IWebElement SelectOptionMultiple => _driver.FindElement(By.Id("multi-select"));
+
+    SelectElement dropdown, multiSelect;
+
+    public void SelectOption(String option)
     {
-        SelectOption.Click();
-        SelectedOption.Click();
+        dropdown.SelectByText(option);
     }
 
-    public void SelectMultipleOption()
+    public void SelectMultipleOptions(List<String> options)
     {
-        MultipleOption1.Click();
-        FirstSelectedButton.Click();
-        
-        MultipleOption2.Click();
-        LastSelectedButton.Click();
-    }
-    
-    public string ActualSelectedOption()
-    {
-        return SelectedOption.Text;
+        SelectElement multiSelect = new SelectElement(SelectOptionMultiple);
+        foreach (var option in options)
+        {
+            multiSelect.SelectByText(option);
+        }
     }
 
-    public string ActualMultipleOption()
+    public Boolean verifyDropdownSelectedOption(String option)
     {
-        string actual=_driver.FindElement(By.XPath("//span[@class='genderbutton']")).Text +"-"+_driver.FindElement(By.XPath("//span[@class='groupradiobutton block break-words']")).Text;
-        return actual;
-        
-        
+        return dropdown.SelectedOption.Text.Equals(option);
     }
     
+    public Boolean verifyMultipleSelectedOptions(List<String> options)
+    {
+        List<String> selectedOptions = new List<String>();
+        List<string> allSelectedOptions = multiSelect.AllSelectedOptions.Select(option => option.Text).ToList();
+        foreach (var option in options)
+        {
+            if (!allSelectedOptions.Contains(option))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }

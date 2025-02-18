@@ -83,12 +83,14 @@ namespace Selenium.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify dropdown contains expected options and selections")]
+        [NUnit.Framework.CategoryAttribute("test")]
         public async System.Threading.Tasks.Task VerifyDropdownContainsExpectedOptionsAndSelections()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "test"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Verify dropdown contains expected options and selections", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 3
+#line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -98,18 +100,20 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 4
-await testRunner.GivenAsync("the browser is open", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
 #line 5
-await testRunner.WhenAsync("Lambda test dropdown Url is open", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.GivenAsync("Lambda test dropdown Url is open", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 6
-await testRunner.AndAsync("Choose the selection from list", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.WhenAsync("Choose Wednesday from dropdown list", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 7
-await testRunner.ThenAsync("The select option is \"Wednesday\" and Multiple selections are \"California\" and \"Oh" +
-                        "io\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+await testRunner.AndAsync("Choose Ohio,California from multiselect list", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 8
+await testRunner.ThenAsync("Verify the selected option in dropdown list is Wednesday", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 9
+await testRunner.AndAsync("Verify the selected option/s in multiselect list is/are Ohio,California", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

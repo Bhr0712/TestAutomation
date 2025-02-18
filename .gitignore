@@ -4,4 +4,5 @@
 */Selenium/Selenium/bin/
 .DS_Store
 Selenium/Selenium.sln.DotSettings.user
-
+*/Selenium/obj/
+*/Selenium/bin/
