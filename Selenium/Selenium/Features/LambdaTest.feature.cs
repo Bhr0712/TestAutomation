@@ -108,8 +108,10 @@ await testRunner.WhenAsync("Lambda test dropdown Url is open", ((string)(null)),
 await testRunner.AndAsync("Choose the selection from list", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 7
-await testRunner.ThenAsync("The select option is \"Wednesday\" and Multiple selections are \"California\" and \"Oh" +
-                        "io\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+await testRunner.ThenAsync("The select option is \"Wednesday\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 8
+await testRunner.AndAsync("Multiple selections are California and Ohio", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
