@@ -14,19 +14,38 @@ public class DragAndDropStep:CommonSteps
         _dragAndDropPage=new DragAndDropPage(_driver);
         _dragAndDropPage.OpenThePage();
     }
-
-
-    [When(@"Drag the item and drop it onto the target")]
-    public void WhenDragTheItemAndDropItOntoTheTarget()
+    
+    
+    [Given("Drag the items {string} drop it onto the target")]
+    public void GivenDragTheItemsDropItOntoTheTarget(string draggable)
     {
-        _dragAndDropPage.PerformDragAndDrop();
+        List<string> draggables=draggable.Split(',').Select(x => x.Trim()).ToList();
+        _dragAndDropPage.PerformDragAndDrop(draggables);
+    }
+    
+    
+
+    [Then(@"The target should contain ""(.*)""")]
+    public void ThenTheTargetShouldContain(string draggables)
+    {
+        var actualDragged=draggables.Split(",").Select(x => x.Trim()).ToList();
+        var expectedDragged = _dragAndDropPage.GetTargetElements();
+        for (int i=0; i<expectedDragged.Count; i++)
+        {
+            Assert.IsTrue(actualDragged.Contains(expectedDragged[i]));
+        }
     }
 
-    [Then(@"The target should contain ""(.*)"", ""(.*)"" and ""(.*)""")]
-    public void ThenTheTargetShouldContainAnd(string draggable1, string draggable2, string dropped)
+    [When(@"Drag the item drop it onto the target")]
+    public void ThenDragTheItemDropItOntoTheTarget()
     {
-        Assert.That(draggable1, Is.EqualTo(_dragAndDropPage.GetTargetElement1()));
-        Assert.That(draggable2, Is.EqualTo(_dragAndDropPage.GetTargetElement2()));
-        Assert.That(dropped, Is.EqualTo(_dragAndDropPage.GetTargetElement3()));
+        _dragAndDropPage.PerformDrop();
+    }
+
+    [When(@"Drag the items '(.*)' drop it onto the target")]
+    public void WhenDragTheItemsDropItOntoTheTarget(string draggable)
+    {
+        List<string> draggables=draggable.Split(',').Select(x => x.Trim()).ToList();
+            _dragAndDropPage.PerformDragAndDrop(draggables);
     }
 }

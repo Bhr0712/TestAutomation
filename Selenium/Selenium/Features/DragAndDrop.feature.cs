@@ -81,6 +81,18 @@ namespace Selenium.Features
             await testRunner.CollectScenarioErrorsAsync();
         }
         
+        public virtual async System.Threading.Tasks.Task FeatureBackgroundAsync()
+        {
+#line 2
+#line hidden
+#line 3
+    await testRunner.GivenAsync("the browser is open", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 4
+    await testRunner.WhenAsync("Lambda test drop and drop Url is open", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+        }
+        
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Drag items and drop to the target")]
         public async System.Threading.Tasks.Task DragItemsAndDropToTheTarget()
@@ -88,7 +100,7 @@ namespace Selenium.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Drag items and drop to the target", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 3
+#line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -98,17 +110,44 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 4
-await testRunner.GivenAsync("the browser is open", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 5
-await testRunner.WhenAsync("Lambda test drop and drop Url is open", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 6
-await testRunner.AndAsync("Drag the item and drop it onto the target", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 2
+await this.FeatureBackgroundAsync();
 #line hidden
 #line 7
-await testRunner.ThenAsync("The target should contain \"Draggable 1\", \"Draggable 2\" and \"Dropped!\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+    await testRunner.AndAsync("Drag the items \'Draggable 1, Draggable 2\' drop it onto the target", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 8
+    await testRunner.ThenAsync("The target should contain \"Draggable 1,Draggable 2\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Drag item and drop to the target")]
+        public async System.Threading.Tasks.Task DragItemAndDropToTheTarget()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Drag item and drop to the target", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 10
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 2
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 11
+    await testRunner.WhenAsync("Drag the item drop it onto the target", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 12
+    await testRunner.ThenAsync("The target should contain \"Dropped!\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

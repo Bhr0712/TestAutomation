@@ -1,5 +1,8 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
 
 namespace Selenium.Pages;
 
@@ -18,33 +21,43 @@ public class DragAndDropPage
         _driver.Navigate().GoToUrl(url);
     }
     
-    IWebElement Draggable1=> _driver.FindElement(By.XPath("//div[@id='todrag']//*[contains(text(),'Draggable 1')]"));
-    IWebElement Draggable2=> _driver.FindElement(By.XPath("//div[@id='todrag']//*[contains(text(),'Draggable 2')]"));
     IWebElement Draggable3=> _driver.FindElement(By.Id("draggable"));
-    IWebElement DropZone=> _driver.FindElement(By.XPath("//*[@id='mydropzone']"));
-    IWebElement DropZone2=> _driver.FindElement(By.XPath("//*[@id='droppable']"));
     
-    IWebElement DroppedItem1=> _driver.FindElement(By.XPath("//div[@id='droppedlist']//*[contains(text(),'Draggable 1')]"));
-    IWebElement DroppedItem2=> _driver.FindElement(By.XPath("//div[@id='droppedlist']//*[contains(text(),'Draggable 2')]"));
+    IWebElement Draggable=>_driver.FindElement(By.Id("todrag"));
+    
+    IWebElement DropZone=> _driver.FindElement(By.Id("mydropzone"));
+    IWebElement DropZone2=> _driver.FindElement(By.Id("droppable"));
+    
+    IWebElement DroppedList=> _driver.FindElement(By.Id("droppedlist"));
+    
     IWebElement DroppedItem3=> _driver.FindElement(By.Id("droppable"));
 
-    public void PerformDragAndDrop()
+    public void PerformDragAndDrop(List<string> listOfDraggables)
     {
         Actions action=new Actions(_driver);
-        action.DragAndDrop(Draggable1, DropZone).Perform();
-        action.DragAndDrop(Draggable2, DropZone).Perform();
-        action.DragAndDrop(Draggable3, DropZone2).Perform();
-        
+        for (int j=0; j<listOfDraggables.Count; j++)
+        {
+            IWebElement draggable = Draggable.FindElement(By.XPath($"//span[contains(text(),'{listOfDraggables[j]}')]"));
+            action.DragAndDrop(draggable, DropZone).Perform();
+        }
     }
 
-    public string GetTargetElement1()
+    public void PerformDrop()
     {
-        return DroppedItem1.Text;
+        Actions action = new Actions(_driver);
+        action.DragAndDrop(Draggable3,DropZone2).Perform();
     }
-    
-    public string GetTargetElement2()
+
+    public List<string> GetTargetElements()
     {
-        return DroppedItem2.Text;
+        List<string> draggedItems=new List<string>();
+      //Assuming each draggable item when dropped is wrapped in a span within in the Dropdown list
+      IReadOnlyCollection<IWebElement> spans = DroppedList.FindElements(By.XPath(".//span"));
+      foreach(IWebElement span in spans)
+      {
+         draggedItems.Add(span.Text);
+      }
+        return draggedItems;
     }
     
     public string GetTargetElement3()
