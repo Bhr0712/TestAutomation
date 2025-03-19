@@ -16,26 +16,33 @@ public class LambdaTestSteps:CommonSteps
     [When(@"Lambda test dropdown Url is open")]
     public void WhenLambdaTestDropdownUrlIsOpen()
     {
-        new DriverManager().SetUpDriver(new ChromeConfig());
-        _driver=new ChromeDriver();
-        _driver.Manage().Window.Maximize();
         _lambdaTest=new LambdaTest(_driver);
         _lambdaTest.OpenThePage();
-        
-        
     }
 
     [When(@"Choose the selection from list")]
     public void WhenChooseTheSelectionFromList()
     {
-        _lambdaTest.SelectionOfOption();
-        _lambdaTest.SelectMultipleOption();
+        _lambdaTest.SelectionOfOption("Wednesday");
+        _lambdaTest.SelectMultipleOption(new List<string> { "California","Ohio" });
     }
 
-    [Then(@"The select option is ""(.*)"" and Multiple selections are ""(.*)"" and ""(.*)""")]
-    public void ThenTheSelectOptionIsAndMultipleSelectionsAreAnd(string expectedDay, string expectedOption1, string expectedOption2)
+    [Then(@"The select option is ""(.*)""")]
+    public void ThenTheSelectOptionIs(string day)
     {
-        Assert.That(_lambdaTest.ActualSelectedOption(), Is.EqualTo(expectedDay));
-        Assert.That(_lambdaTest.ActualMultipleOption(), Is.EqualTo(expectedOption1+"-"+expectedOption2));
+        Assert.That(_lambdaTest.GetSelectedOptionText(), Is.EqualTo(day));
+    }
+    
+
+    [Then(@"Multiple selections are (.*)")]
+    public void ThenMultipleSelectionsAreCaliforniaAndOhio(string state)
+    {
+        var stateList = state.Split("and").Select(x => x.Trim()).ToList();
+        var actualState = _lambdaTest.ActualMultipleOption();
+
+        for (int i = 0; i < stateList.Count; i++)
+        {
+            Assert.True(actualState.Contains(stateList[i]));
+        }
     }
 }
