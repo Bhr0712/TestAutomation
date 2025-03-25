@@ -150,13 +150,13 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 14
-    await testRunner.WhenAsync("Click the Show all Rows", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.WhenAsync("Click the \'Show ALL Rows\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 15
     await testRunner.ThenAsync("I should see the 40 rows", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 16
-    await testRunner.WhenAsync("The row size change to the 5", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.WhenAsync("The row size change to the 15", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 17
     await testRunner.ThenAsync("Navigate to the next page of result", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
