@@ -32,7 +32,7 @@ public class PaginationSteps: CommonSteps
     [Then(@"Navigate to the next page of result")]
     public void ThenNavigateToTheNextPageOfResult()
     {
-        _paginationPage.GoToNextPage();
+        _paginationPage.GoToLastPage();
     }
 
     [Then(@"I should see the next set of results")]
@@ -41,10 +41,10 @@ public class PaginationSteps: CommonSteps
        Assert.That(_paginationPage.IsLastPage(), Is.True);
     }
 
-    [When(@"Click the '(.*)'")]
-    public void WhenClickThe(string allRowSelected)
+    [When(@"Click the Show all Rows")]
+    public void WhenClickThe()
     {
-        _paginationPage.SelectAllRows(allRowSelected);
+        _paginationPage.SelectAllRows();
     }
 
     [Then(@"I should see the (.*) rows")]

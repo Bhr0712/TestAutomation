@@ -31,8 +31,19 @@ public class PaginationPage
     
     IWebElement nextButton =>_driver.FindElement(By.XPath("//div[@class='pagination-container']//span[contains(text(),'>')]"));
 
-    private IWebElement lastRow =>
+     IWebElement lastRow =>
         _driver.FindElement(By.XPath("//table[@id='table-id']/tbody/tr/td[contains(text(),'Cherry')]"));
+
+     IList<IWebElement> PaginationListELement =>
+        _driver.FindElements(By.XPath("//div[@class='pagination-container']//ul/li"));
+
+     public void GoToLastPage()
+     {
+         for (int i=0;i<PaginationListELement.Count-3; i++)
+         {
+             nextButton.Click();
+         }
+     }
     
     //Dynamically changing the row Size
     public void DynamicallyChangingRow(List <int> rows)
@@ -44,10 +55,10 @@ public class PaginationPage
         }
     }
 
-    public void SelectAllRows(string selectRows)
+    public void SelectAllRows()
     {
         select=new SelectElement(SelectField);
-        select.SelectByText(selectRows);
+        select.SelectByText("Show ALL Rows");
     }
 
     public int getPageRow()
@@ -64,40 +75,49 @@ public class PaginationPage
     public bool IsLastPage()
     { 
         //Return true if disabled, meaning it's the last page
-        if (lastRow.Displayed)
-        { 
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+        // if (lastRow.Displayed)
+        // { 
+        //     return true;
+        // }
+        // else
+        // {
+        //     return false;
+        // }
 
-    public void GoToNextPage()
-    {
         while (true)
         {
-            try
+            int i = PaginationListELement.Count - 2;
+            if (PaginationListELement[i].GetDomAttribute("class").Equals("active"))
             {
-                if (lastRow.Displayed)
-                {
-                   break; //Exit loop if button is disabled
-                }
-                if(nextButton.Enabled && nextButton.Displayed)
-                {
-                    nextButton.Click();
-                    Thread.Sleep(1000); //Give some time page to load
-                }
-                else{break;}
+                return true;
             }
-            catch (NoSuchElementException)
-            {
-                break; //Exit loop if button is not found
-            }
-
         }
     }
+
+    // public void GoToNextPage()
+    // {
+    //     while (true)
+    //     {
+    //         try
+    //         {
+    //             if (lastRow.Displayed)
+    //             {
+    //                break; //Exit loop if button is disabled
+    //             }
+    //             if(nextButton.Enabled && nextButton.Displayed)
+    //             {
+    //                 nextButton.Click();
+    //                 Thread.Sleep(1000); //Give some time page to load
+    //             }
+    //             else{break;}
+    //         }
+    //         catch (NoSuchElementException)
+    //         {
+    //             break; //Exit loop if button is not found
+    //         }
+    //
+    //     }
+    // }
 }
 
 
