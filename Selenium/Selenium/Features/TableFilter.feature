@@ -10,11 +10,11 @@ Then I should see only rows containing 'JavaScript'
 
 
 Scenario Outline: Filter user table by different columns
-When I enter "<filterValue>" into the "<columnName>" filter
+When I enter "<columnName>" into the "<filterValue>" filter
 Then I should see only the rows column name's <filterValue>"
     Examples:
-      | columnName | filterValue |
-      | #          | 1           |
-      | Username   | matheson    |
-      | FirstName  | Halima      |
-      | LastName   | John        |
+      | columnName  | filterValue  |
+      | #           | 1            |
+      | Username    | matheson     |
+      | First Name  | Halima       |
+      | Last Name   | John         |
